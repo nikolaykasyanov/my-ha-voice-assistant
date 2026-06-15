@@ -1,0 +1,25 @@
+services:
+  piper:
+    container_name: piper
+    image: rhasspy/wyoming-piper
+    command: --voice en_GB-cori-high
+    volumes:
+      - ./volumes/piper/data:/data
+    environment:
+      - TZ=Europe/Berlin
+    restart: unless-stopped
+    ports:
+      - 10200:10200
+  wyoming-whisper:
+    container_name: wyoming-whisper
+    image: ghcr.io/ser/wyoming-whisper-api-client:latest
+    command: --debug --uri tcp://0.0.0.0:7891 --api http://host.docker.internal:8910/inference
+    ports:
+      - 7891:7891
+
+# networks:
+#   default:
+#     driver: bridge
+#     ipam:
+#       config:
+#         - subnet: 172.111.0.0/24
