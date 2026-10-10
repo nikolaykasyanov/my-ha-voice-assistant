@@ -24,10 +24,18 @@ services:
       - "host.docker.internal:host-gateway"   # needed on Linux, harmless elsewhere
     ports:
       - 7891:7891
-
-# networks:
-#   default:
-#     driver: bridge
-#     ipam:
-#       config:
-#         - subnet: 172.111.0.0/24
+  ha-llm-tool-sanitizer:
+    image: ghcr.io/nikolaykasyanov/ha-llm-tool-call-sanitizer:latest
+    container_name: ha-llm-tool-sanitizer
+    restart: unless-stopped
+    ports:
+      - "8100:8100"
+    environment:
+      UPSTREAM_BASE_URL: "http://host.docker.internal:8000"
+      # Tool-call argument names to sanitize (case-insensitive).
+      SANITIZE_KEYS: "name,area,floor,player_name,player_area"
+      # "first" = keep text before the first comma; "off" = passthrough.
+      STRIP_MODE: "first"
+      LOG_LEVEL: "INFO"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
