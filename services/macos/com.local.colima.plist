@@ -6,7 +6,7 @@
   <key>UserName</key><string>services</string>
   <key>ProgramArguments</key>
   <array>
-    <string>/Users/services/Library/Application Support/xyz.kasyanov.ha.voice/nix/bin/colima</string>
+    <string>/Users/services/Library/Application Support/xyz.kasyanov.ha.voice/bin/colima</string>
     <string>start</string>
     <string>--foreground</string>
     <string>--memory</string><string>1</string>
