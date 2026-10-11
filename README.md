@@ -1,6 +1,6 @@
 This repo contains the config & prompts of my [Home Assistant]-powered voice assistant.
 
-# Home Assistant Setup
+# Home Assistant
 
 The setup relies on the following HA integrations:
 - [llama.cpp][HA llama.cpp] to add & configure [oMLX] as a conversation agent
@@ -27,7 +27,7 @@ The services are:
 
 ## services/docker
 
-Contains a Docker compose stack with the following services:
+Contains a Docker Compose stack with the following services:
 - [wyoming-piper]: text-to-speech server compatible with HA's [Wyoming Protocol]
 - [wyoming-whisper]: an adapter making the whisper.cpp service compatible with [Wyoming Protocol]
 - [ha-llm-tool-call-sanitizer]: a tiny proxy between HA and oMLX to account for HA's inability to handle tool calls with comma separated strings as floor/area/device names
