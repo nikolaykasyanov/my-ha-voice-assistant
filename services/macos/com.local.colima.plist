@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.local.colima</string>
+  <key>UserName</key><string>services</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/run/current-system/sw/bin/colima</string>
+    <string>start</string>
+    <string>--foreground</string>
+    <string>--memory</string><string>1</string>
+  </array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>HOME</key><string>/Users/services</string>
+    <key>PATH</key><string>/opt/homebrew/bin:/run/current-system/sw/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+  </dict>
+  <key>RunAtLoad</key><true/>
+  <key>KeepAlive</key><true/>
+  <!-- full colima shutdown takes some time and terminating it before that leaves it kind-of-running,
+  see https://github.com/lima-vm/lima/pull/5088 -->
+  <key>ExitTimeOut</key><integer>60</integer>
+  <key>ThrottleInterval</key><integer>30</integer>
+  <key>StandardOutPath</key><string>/Users/services/Library/Logs/colima.log</string>
+  <key>StandardErrorPath</key><string>/Users/services/Library/Logs/colima.log</string>
+</dict>
+</plist>
