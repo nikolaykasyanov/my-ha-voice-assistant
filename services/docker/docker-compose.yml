@@ -25,6 +25,7 @@ services:
     ports:
       - 7891:7891
   ha-llm-tool-sanitizer:
+    # not yet actually published
     image: ghcr.io/nikolaykasyanov/ha-llm-tool-call-sanitizer:latest
     container_name: ha-llm-tool-sanitizer
     restart: unless-stopped
