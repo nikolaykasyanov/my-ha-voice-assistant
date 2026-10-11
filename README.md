@@ -32,6 +32,36 @@ Contains a Docker Compose stack with the following services:
 - [wyoming-whisper]: an adapter making the whisper.cpp service compatible with [Wyoming Protocol]
 - [ha-llm-tool-call-sanitizer]: a tiny proxy between HA and oMLX to account for HA's inability to handle tool calls with comma separated strings as floor/area/device names
 
+# Running
+
+You're free to change any paths but some files like macOS launch daemons would have to be edited accordingly in this case.
+
+## Installing nix dependencies
+
+```bash
+nix build .#services --out-link ~/Library/Application\ Support/xyz.kasyanov.ha.voice/nix
+```
+
+## Installing oMLX
+
+Download the latest release DMG and put oMLX.app into /Applications.
+You may want to run it before proceeding to adjust the settings, download the model and adjust its
+settings. This will become unnecessary once oMLX settings are a part of this repo.
+
+## Running macOS Launch Daemons
+
+```bash
+cd my-ha-voice-assistant/services/macos
+sudo ./deploy.sh
+```
+
+## Running Docker Services
+
+```bash
+cd my-ha-voice-assistant/services/docker
+docker compose up -d
+```
+
 [colima]: https://colima.run
 [HA llama.cpp]: https://www.home-assistant.io/integrations/llama_cpp
 [HA LLM intents]: https://github.com/skye-harris/llm_intents
