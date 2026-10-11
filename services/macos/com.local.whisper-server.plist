@@ -6,7 +6,7 @@
   <key>UserName</key><string>services</string>
   <key>ProgramArguments</key>
   <array>
-    <string>/opt/homebrew/bin/whisper-server</string>
+    <string>/Users/services/Library/Application Support/xyz.kasyanov.ha.voice/bin/whisper-server</string>
     <string>--model</string><string>/Users/services/my-ha-voice-assistant/models/stt/ggml-large-v3-turbo-q5_0.bin</string>
     <string>--host</string><string>127.0.0.1</string>
     <string>--port</string><string>8910</string>
