@@ -6,7 +6,7 @@
   <key>UserName</key><string>services</string>
   <key>ProgramArguments</key>
   <array>
-    <string>/run/current-system/sw/bin/colima</string>
+    <string>/Users/services/Library/Application Support/xyz.kasyanov.ha.voice/bin/colima</string>
     <string>start</string>
     <string>--foreground</string>
     <string>--memory</string><string>1</string>
@@ -14,7 +14,6 @@
   <key>EnvironmentVariables</key>
   <dict>
     <key>HOME</key><string>/Users/services</string>
-    <key>PATH</key><string>/opt/homebrew/bin:/run/current-system/sw/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
   </dict>
   <key>RunAtLoad</key><true/>
   <key>KeepAlive</key><true/>
