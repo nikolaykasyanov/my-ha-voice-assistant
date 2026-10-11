@@ -13,7 +13,6 @@
   <key>EnvironmentVariables</key>
   <dict>
     <key>HOME</key><string>/Users/services</string>
-    <key>PATH</key><string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
   </dict>
   <key>WorkingDirectory</key><string>/Users/services</string>
   <key>RunAtLoad</key><true/>

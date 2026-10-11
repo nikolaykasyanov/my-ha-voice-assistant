@@ -14,7 +14,6 @@
   <key>EnvironmentVariables</key>
   <dict>
     <key>HOME</key><string>/Users/services</string>
-    <key>PATH</key><string>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
   </dict>
   <key>RunAtLoad</key><true/>
   <key>KeepAlive</key><true/>
