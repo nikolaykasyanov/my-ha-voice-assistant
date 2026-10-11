@@ -18,18 +18,6 @@
           hash = whisperModelHash;
         };
       in {
-        devShells.default = pkgs.mkShell {
-          packages = with pkgs; [
-            colima
-            docker
-            whisper-cpp
-          ];
-
-          shellHook = ''
-            echo "Dev environment ready"
-          '';
-        };
-
         packages.services = pkgs.symlinkJoin {
           name = "my-ha-voice-assistant-services";
           paths = [ pkgs.colima pkgs.docker pkgs.whisper-cpp ];
