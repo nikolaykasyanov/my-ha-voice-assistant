@@ -39,6 +39,7 @@ You're free to change any paths but some files like macOS launch daemons would h
 ## Installing nix dependencies
 
 ```bash
+cd my-ha-voice-assistant
 nix build .#services --out-link ~/Library/Application\ Support/xyz.kasyanov.ha.voice
 ```
 
