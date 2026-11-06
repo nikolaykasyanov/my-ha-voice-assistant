@@ -13,7 +13,7 @@ control tools' configuratbility
 For the conversation agent [mlx-community/unsloth-gemma-4-26B-A4B-it-qat-oQ4] is used, its detailed
 settings may land later once I publish the oMLX configuration files.
 
-For speech-to-text [ggml-large-v3-turbo-q5_0.bin][whisper.cpp stt model] is used.
+For speech-to-text [parakeet-tdt-0.6b-v3][stt model] is used.
 
 # Layout
 
@@ -22,14 +22,13 @@ For speech-to-text [ggml-large-v3-turbo-q5_0.bin][whisper.cpp stt model] is used
 The necessary macOS launch daemons' Plist files are stored here, along with the script to deploy them.
 The services are:
 - [colima]: container runtime for Docker
-- [oMLX]: macOS-native OpenAI-compatible LLM server
-- [whisper.cpp]: speech-to-text server
+- [oMLX]: macOS-native OpenAI-compatible LLM server, running both the conversation & the speech-to-text model
 
 ## services/docker
 
 Contains a Docker Compose stack with the following services:
 - [wyoming-piper]: text-to-speech server compatible with HA's [Wyoming Protocol]
-- [wyoming-whisper]: an adapter making the whisper.cpp service compatible with [Wyoming Protocol]
+- [wyoming-whisper]: an adapter making OpenAI-compatible endpoints compatible with the [Wyoming Protocol]
 - [ha-llm-tool-call-sanitizer]: a tiny proxy between HA and oMLX to account for HA's inability to handle tool calls with comma separated strings as floor/area/device names
 
 # Running
@@ -70,8 +69,7 @@ docker compose up -d
 [Home Assistant]: https://www.home-assistant.io
 [mlx-community/unsloth-gemma-4-26B-A4B-it-qat-oQ4]: https://huggingface.co/mlx-community/unsloth-gemma-4-26B-A4B-it-qat-oQ4
 [oMLX]: https://omlx.ai
-[whisper.cpp stt model]: https://huggingface.co/ggerganov/whisper.cpp/blob/main/ggml-large-v3-turbo-q5_0.bin
-[whisper.cpp]: https://github.com/ggml-org/whisper.cpp
+[stt model]: https://huggingface.co/mlx-community/parakeet-tdt-0.6b-v3/tree/main
 [Wyoming Protocol]: https://www.home-assistant.io/integrations/wyoming/
 [wyoming-piper]: https://github.com/OHF-Voice/wyoming-piper
 [wyoming-whisper]: https://github.com/roryeckel/wyoming_openai
