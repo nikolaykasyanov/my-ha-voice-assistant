@@ -60,7 +60,7 @@ in
       StandardErrorPath = "${home}/colima.log";
     };
   };
-  
+
   launchd.daemons.omlx = {
     script = ''
       exec /Applications/oMLX.app/Contents/MacOS/omlx-cli \
@@ -98,6 +98,6 @@ in
     ${pkgs.replace-secret}/bin/replace-secret @STT_API_KEY@ ${apiKeyFile} ${home}/docker/docker-compose.env
 
     #TODO wait for colima to start/docker daemon to be available!
-    sudo -u ${user} -H ${pkgs.docker}/bin/docker compose --file ${home}/docker/docker-compose.yml up --detach 
+    sudo -u ${user} -H ${pkgs.docker}/bin/docker compose --file ${home}/docker/docker-compose.yml up --detach
   '';
 }
