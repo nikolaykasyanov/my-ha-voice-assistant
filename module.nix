@@ -7,7 +7,7 @@ let
     fetchLFS = true;
     hash = "sha256-rT5tfVGSqtyOjrg4M+fWBy8GpAIdonYi10EAEi6Oh3E=";
   };
-  qwen354b = pkgs.fetchgit {
+  qwen35-4B = pkgs.fetchgit {
     url = "https://huggingface.co/mlx-community/Qwen3.5-4B-MLX-4bit";
     rev = "32f3e8ecf65426fc3306969496342d504bfa13f3";
     fetchLFS = true;
@@ -33,7 +33,7 @@ in
     (pkgs.runCommand "omlx-models" {} ''
       mkdir -p $out/share/models/mlx-community
       ln -s ${parakeet} $out/share/models/mlx-community/parakeet-tdt-0.6b-v3
-      ln -s ${qwen354b} $out/share/models/mlx-community/Qwen3.5-4B-MLX-4bit
+      ln -s ${qwen35-4B} $out/share/models/mlx-community/Qwen3.5-4B-MLX-4bit
     '')
     pkgs.colima
     pkgs.docker
