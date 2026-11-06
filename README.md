@@ -40,6 +40,8 @@ Contains [oMLX] settings.
 
 # Running
 
+Please install [oMLX] in `/Applications` manually before proceeding. Eventually its installation will be a part of [module.nix](./module.nix).
+
 This repo assumes that [nix-darwin] is used via flakes. The setup can be added to your flake like this:
 
 ```nix
@@ -70,12 +72,6 @@ This repo assumes that [nix-darwin] is used via flakes. The setup can be added t
   };
 }
 ```
-
-## Installing oMLX
-
-Download the latest release DMG and put oMLX.app into /Applications.
-You may want to run it before proceeding to adjust the settings, download the model and adjust its
-settings. This will become unnecessary once oMLX settings are a part of this repo.
 
 [colima]: https://colima.run
 [HA llama.cpp]: https://www.home-assistant.io/integrations/llama_cpp
