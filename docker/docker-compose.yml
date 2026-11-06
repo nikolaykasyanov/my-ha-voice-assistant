@@ -20,7 +20,6 @@ services:
       WYOMING_LOG_LEVEL: INFO
       WYOMING_LANGUAGES: en ru
       STT_OPENAI_URL: http://host.docker.internal:8000/v1
-      STT_MODELS: mlx-community/parakeet-tdt-0.6b-v3
     extra_hosts:
       - "host.docker.internal:host-gateway"   # needed on Linux, harmless elsewhere
     ports:
