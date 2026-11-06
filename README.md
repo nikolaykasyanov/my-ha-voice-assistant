@@ -17,7 +17,7 @@ For speech-to-text [parakeet-tdt-0.6b-v3][stt model] is used.
 
 # Layout
 
-## module.nix
+## [module.nix](./module.nix)
 
 Contains a [nix-darwin] module that:
 - defines the user that runs all the services
@@ -27,14 +27,14 @@ Contains a [nix-darwin] module that:
 - provisions the docker compose setup
 - defines & downloads the necessary models
 
-## docker
+## [docker](./docker/)
 
 Contains a Docker Compose stack with the following services:
 - [wyoming-piper]: text-to-speech server compatible with HA's [Wyoming Protocol]
 - [wyoming-whisper]: an adapter making OpenAI-compatible endpoints compatible with the [Wyoming Protocol]
 - [ha-llm-tool-call-sanitizer]: a tiny proxy between HA and oMLX to account for HA's inability to handle tool calls with comma separated strings as floor/area/device names
 
-## omlx
+## [omlx](./omlx/)
 
 Contains [oMLX] settings.
 
