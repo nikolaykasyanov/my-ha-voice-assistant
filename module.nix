@@ -53,6 +53,7 @@ in
         USER = user;
         PATH = lib.makeBinPath [ pkgs.colima ] + ":/usr/bin:/bin:/usr/sbin:/sbin";
       };
+      # Full colima shutdown takes some time and terminating it before that leaves it kind-of-running, see https://github.com/lima-vm/lima/pull/5088.
       ExitTimeOut = 60;
       ThrottleInterval = 30;
       StandardOutPath = "${home}/colima.log";
@@ -76,6 +77,7 @@ in
       KeepAlive = true;
       EnvironmentVariables = {
         HOME = home;
+        # This env var is supposed to trigger service reload when the file path changes (and hence its contents).
         MODEL_SETTINGS_SRC = "${./omlx/model_settings.json}";
       };
       ThrottleInterval = 30;
