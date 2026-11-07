@@ -91,13 +91,31 @@ in
       ln -sfn ${./omlx/model_settings.json} ${home}/.omlx/model_settings.json
   '';
 
-  system.activationScripts.postActivation.text = ''
+  system.activationScripts.postActivation.text = let
+    asUser = lib.concatStringsSep " " [
+      "sudo -u ${user} -H env"
+      "PATH=${lib.makeBinPath [ pkgs.docker pkgs.docker-compose ]}:/usr/bin:/bin"
+      "DOCKER_HOST=unix://${home}/.colima/default/docker.sock"
+    ];
+  in ''
     install -d -o ${user} -g staff -m 700 ${home}/docker
     install -o ${user} -g staff -m 600 ${./docker/docker-compose.yml} ${home}/docker/docker-compose.yml
     cp  ${docker-compose-env} ${home}/docker/docker-compose.env
     ${pkgs.replace-secret}/bin/replace-secret @STT_API_KEY@ ${apiKeyFile} ${home}/docker/docker-compose.env
 
-    #TODO wait for colima to start/docker daemon to be available!
-    sudo -u ${user} -H ${pkgs.docker}/bin/docker compose --file ${home}/docker/docker-compose.yml up --detach
+    docker_ready=0
+    for _ in $(seq 1 60); do
+      if ${asUser} ${pkgs.docker}/bin/docker info >/dev/null 2>&1; then
+        docker_ready=1
+        break
+      fi
+      sleep 2
+    done
+
+    if [ "$docker_ready" = 1 ]; then
+      ${asUser} ${pkgs.docker-compose}/bin/docker-compose --file ${home}/docker/docker-compose.yml up --detach
+    else
+      echo "warning: docker not ready after 120s, skipping compose up" >&2
+    fi
   '';
 }
