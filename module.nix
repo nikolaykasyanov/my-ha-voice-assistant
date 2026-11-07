@@ -51,8 +51,7 @@ in
       EnvironmentVariables = {
         HOME = home;
         USER = user;
-        PATH = lib.makeBinPath [ pkgs.colima pkgs.docker pkgs.lima ]
-          + ":/usr/bin:/bin:/usr/sbin:/sbin";
+        PATH = lib.makeBinPath [ pkgs.colima ] + ":/usr/bin:/bin:/usr/sbin:/sbin";
       };
       ExitTimeOut = 60;
       ThrottleInterval = 30;
