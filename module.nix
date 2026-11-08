@@ -72,7 +72,8 @@ in
         --model qwen3.5-9b \
         --private \
         --port 8001 \
-        --api-key "$(cat ${apiKeyFile})"
+        --api-key "$(cat ${apiKeyFile})" \
+        --mem-budget 10
     '';
     serviceConfig = {
       UserName = user;
@@ -95,7 +96,9 @@ in
         serve \
         --model-dir ${config.system.path}/share/models \
         --port 8000 \
-        --api-key "$(cat ${apiKeyFile})"
+        --api-key "$(cat ${apiKeyFile})" \
+        --hot-cache-max-size 1GB \
+        --paged-ssd-cache-max-size 5GB
     '';
     serviceConfig = {
       UserName = user;
