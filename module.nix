@@ -98,7 +98,6 @@ in
         --api-key "$(cat ${apiKeyFile})"
     '';
     serviceConfig = {
-      Disabled = true;
       UserName = user;
       GroupName = "staff";
       WorkingDirectory = home;
