@@ -30,6 +30,7 @@ in
   };
 
   environment.systemPackages = [
+    (pkgs.callPackage ./packages/omlx-bin/package.nix {})
     (pkgs.runCommand "omlx-models" {} ''
       mkdir -p $out/share/models/mlx-community
       ln -s ${parakeet} $out/share/models/mlx-community/parakeet-tdt-0.6b-v3
@@ -63,7 +64,7 @@ in
 
   launchd.daemons.omlx = {
     script = ''
-      exec /Applications/oMLX.app/Contents/MacOS/omlx-cli \
+      exec ${pkgs.omlx-bin}/bin/omlx-cli \
         serve \
         --model-dir ${config.system.path}/share/models \
         --port 8000 \
