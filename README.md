@@ -74,7 +74,7 @@ This repo assumes that [nix-darwin] is used via flakes. The setup can be added t
 ```
 
 [colima]: https://colima.run
-[conversation model]: https://huggingface.co/mlx-community/mlx-community/Qwen3.5-4B-MLX-4bit
+[conversation model]: https://huggingface.co/mlx-community/Qwen3.5-4B-MLX-4bit
 [HA llama.cpp]: https://www.home-assistant.io/integrations/llama_cpp
 [HA LLM intents]: https://github.com/skye-harris/llm_intents
 [ha-llm-tool-call-sanitizer]: https://github.com/nikolaykasyanov/ha-llm-tool-call-sanitizer
