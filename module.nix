@@ -1,6 +1,7 @@
 { user, home, apiKeyFile }:
 { config, pkgs, lib, ... }:
 let
+  omlx-bin = pkgs.callPackage ./packages/omlx-bin/package.nix {};
   parakeet = pkgs.fetchgit {
     url = "https://huggingface.co/mlx-community/parakeet-tdt-0.6b-v3";
     rev = "ed2b7e8c15f9aaa0b5772e2efb986255eaef7e15";
@@ -30,12 +31,12 @@ in
   };
 
   environment.systemPackages = [
-    (pkgs.callPackage ./packages/omlx-bin/package.nix {})
     (pkgs.runCommand "omlx-models" {} ''
       mkdir -p $out/share/models/mlx-community
       ln -s ${parakeet} $out/share/models/mlx-community/parakeet-tdt-0.6b-v3
       ln -s ${qwen35-4B} $out/share/models/mlx-community/Qwen3.5-4B-MLX-4bit
     '')
+    omlx-bin
     pkgs.colima
     pkgs.docker
   ];
@@ -64,7 +65,7 @@ in
 
   launchd.daemons.omlx = {
     script = ''
-      exec ${pkgs.omlx-bin}/bin/omlx-cli \
+      exec ${omlx-bin}/bin/omlx-cli \
         serve \
         --model-dir ${config.system.path}/share/models \
         --port 8000 \
