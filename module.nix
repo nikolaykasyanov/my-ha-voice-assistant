@@ -1,6 +1,7 @@
 { user, home, apiKeyFile }:
 { config, pkgs, lib, ... }:
 let
+  kapitsa-bin = pkgs.callPackage ./packages/kapitsa-bin/package.nix {};
   omlx-bin = pkgs.callPackage ./packages/omlx-bin/package.nix {};
   parakeet = pkgs.fetchgit {
     url = "https://huggingface.co/mlx-community/parakeet-tdt-0.6b-v3";
@@ -36,6 +37,7 @@ in
       ln -s ${parakeet} $out/share/models/mlx-community/parakeet-tdt-0.6b-v3
       ln -s ${qwen35-4B} $out/share/models/mlx-community/Qwen3.5-4B-MLX-4bit
     '')
+    kapitsa-bin
     omlx-bin
     pkgs.colima
     pkgs.docker
