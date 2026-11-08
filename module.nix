@@ -65,6 +65,30 @@ in
     };
   };
 
+  launchd.daemons.kapitsa = {
+    script = ''
+      exec ${kapitsa-bin}/bin/kapitsa \
+        serve \
+        --model qwen3.5-9b \
+        --private \
+        --port 8001 \
+        --api-key "$(cat ${apiKeyFile})"
+    '';
+    serviceConfig = {
+      UserName = user;
+      GroupName = "staff";
+      WorkingDirectory = home;
+      RunAtLoad = true;
+      KeepAlive = true;
+      EnvironmentVariables = {
+        HOME = home;
+      };
+      ThrottleInterval = 30;
+      StandardOutPath = "${home}/kapitsa.log";
+      StandardErrorPath = "${home}/kapitsa.log";
+    };
+  };
+
   launchd.daemons.omlx = {
     script = ''
       exec ${omlx-bin}/bin/omlx-cli \
