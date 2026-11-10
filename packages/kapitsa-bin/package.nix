@@ -6,11 +6,11 @@
 
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "kapitsa-bin";
-  version = "0.2.31";
+  version = "0.2.33";
 
   src = fetchurl {
     url = "https://github.com/nace-ai/kapitsa/releases/download/v${finalAttrs.version}/kapitsa-${finalAttrs.version}-darwin-arm64.tar.gz";
-    hash = "sha256-qrwDRLLLeEni4IKMP8uEJaPdLeQEDEj9h9t/tHFL3ug=";
+    hash = "sha256-1hoXQ4o3rH3eHyVFvzcirRtDzJYIXmjWLdBpVBnp47s=";
   };
 
   # Leave the prebuilt Mach-O binaries untouched (they only link system
