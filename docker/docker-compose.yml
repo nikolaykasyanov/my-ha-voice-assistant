@@ -32,7 +32,7 @@ services:
     ports:
       - "8100:8100"
     environment:
-      UPSTREAM_BASE_URL: "http://host.docker.internal:8000"
+      UPSTREAM_BASE_URL: "http://host.docker.internal:8001"
       # Tool-call argument names to sanitize (case-insensitive).
       SANITIZE_KEYS: "name,area,floor,player_name,player_area"
       # "first" = keep text before the first comma; "off" = passthrough.

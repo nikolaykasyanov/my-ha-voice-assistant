@@ -1,18 +1,13 @@
 { user, home, apiKeyFile }:
 { config, pkgs, lib, ... }:
 let
+  kapitsa-bin = pkgs.callPackage ./packages/kapitsa-bin/package.nix {};
   omlx-bin = pkgs.callPackage ./packages/omlx-bin/package.nix {};
   parakeet = pkgs.fetchgit {
     url = "https://huggingface.co/mlx-community/parakeet-tdt-0.6b-v3";
     rev = "ed2b7e8c15f9aaa0b5772e2efb986255eaef7e15";
     fetchLFS = true;
     hash = "sha256-rT5tfVGSqtyOjrg4M+fWBy8GpAIdonYi10EAEi6Oh3E=";
-  };
-  qwen35-4B = pkgs.fetchgit {
-    url = "https://huggingface.co/mlx-community/Qwen3.5-4B-MLX-4bit";
-    rev = "32f3e8ecf65426fc3306969496342d504bfa13f3";
-    fetchLFS = true;
-    hash = "sha256-f90e4d8LnPIV8aMGWsqXsUTxfMzw1eizOhb/3WtO55o=";
   };
   docker-compose-env = pkgs.replaceVars ./docker/docker-compose.env.template {
     STT_API_KEY = null;
@@ -34,8 +29,8 @@ in
     (pkgs.runCommand "omlx-models" {} ''
       mkdir -p $out/share/models/mlx-community
       ln -s ${parakeet} $out/share/models/mlx-community/parakeet-tdt-0.6b-v3
-      ln -s ${qwen35-4B} $out/share/models/mlx-community/Qwen3.5-4B-MLX-4bit
     '')
+    kapitsa-bin
     omlx-bin
     pkgs.colima
     pkgs.docker
@@ -63,13 +58,40 @@ in
     };
   };
 
+  launchd.daemons.kapitsa = {
+    script = ''
+      exec ${kapitsa-bin}/bin/kapitsa \
+        serve \
+        --model qwen3.5-9b \
+        --private \
+        --port 8001 \
+        --api-key "$(cat ${apiKeyFile})" \
+        --mem-budget 10
+    '';
+    serviceConfig = {
+      UserName = user;
+      GroupName = "staff";
+      WorkingDirectory = home;
+      RunAtLoad = true;
+      KeepAlive = true;
+      EnvironmentVariables = {
+        HOME = home;
+      };
+      ThrottleInterval = 30;
+      StandardOutPath = "${home}/kapitsa.log";
+      StandardErrorPath = "${home}/kapitsa.log";
+    };
+  };
+
   launchd.daemons.omlx = {
     script = ''
       exec ${omlx-bin}/bin/omlx-cli \
         serve \
         --model-dir ${config.system.path}/share/models \
         --port 8000 \
-        --api-key "$(cat ${apiKeyFile})"
+        --api-key "$(cat ${apiKeyFile})" \
+        --hot-cache-max-size 1GB \
+        --paged-ssd-cache-max-size 5GB
     '';
     serviceConfig = {
       UserName = user;
