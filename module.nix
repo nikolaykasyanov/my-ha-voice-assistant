@@ -9,12 +9,6 @@ let
     fetchLFS = true;
     hash = "sha256-rT5tfVGSqtyOjrg4M+fWBy8GpAIdonYi10EAEi6Oh3E=";
   };
-  qwen35-4B = pkgs.fetchgit {
-    url = "https://huggingface.co/mlx-community/Qwen3.5-4B-MLX-4bit";
-    rev = "32f3e8ecf65426fc3306969496342d504bfa13f3";
-    fetchLFS = true;
-    hash = "sha256-f90e4d8LnPIV8aMGWsqXsUTxfMzw1eizOhb/3WtO55o=";
-  };
   docker-compose-env = pkgs.replaceVars ./docker/docker-compose.env.template {
     STT_API_KEY = null;
     STT_MODEL = "parakeet-tdt-0.6b-v3";
@@ -35,7 +29,6 @@ in
     (pkgs.runCommand "omlx-models" {} ''
       mkdir -p $out/share/models/mlx-community
       ln -s ${parakeet} $out/share/models/mlx-community/parakeet-tdt-0.6b-v3
-      ln -s ${qwen35-4B} $out/share/models/mlx-community/Qwen3.5-4B-MLX-4bit
     '')
     kapitsa-bin
     omlx-bin
