@@ -39,7 +39,13 @@ in
 
   launchd.daemons.colima = {
     serviceConfig = {
-      ProgramArguments = [ (lib.getExe pkgs.colima) "start" "--foreground" "--memory" "1" ];
+      ProgramArguments = [
+        "/bin/sh" "-c"
+        ''
+          while [ ! -x ${lib.getExe pkgs.colima} ]; do sleep 1; done
+          exec ${lib.getExe pkgs.colima} start --foreground --memory 1
+        ''
+      ];
       UserName = user;
       GroupName = "staff";
       WorkingDirectory = home;
