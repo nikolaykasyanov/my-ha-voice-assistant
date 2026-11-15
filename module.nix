@@ -72,7 +72,8 @@ in
         --private \
         --port 8001 \
         --api-key "$(cat ${apiKeyFile})" \
-        --mem-budget 15
+        --mem-budget 15 \
+        --idle-unload 0
     '';
     serviceConfig = {
       UserName = user;
