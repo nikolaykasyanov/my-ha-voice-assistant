@@ -108,8 +108,6 @@ in
       KeepAlive = true;
       EnvironmentVariables = {
         HOME = home;
-        # This env var is supposed to trigger service reload when the file path changes (and hence its contents).
-        MODEL_SETTINGS_SRC = "${./omlx/model_settings.json}";
       };
       ThrottleInterval = 30;
       StandardOutPath = "${home}/omlx.log";
@@ -119,8 +117,6 @@ in
 
   system.activationScripts.preActivation.text = ''
       install -d -o ${user} -g staff -m 700 ${home}
-
-      ln -sfn ${./omlx/model_settings.json} ${home}/.omlx/model_settings.json
   '';
 
   system.activationScripts.postActivation.text = let
