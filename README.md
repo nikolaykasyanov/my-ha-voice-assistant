@@ -10,22 +10,11 @@ control tools' configuratbility
 
 # Models
 
-For the conversation agent [mlx-community/Qwen3.5-4B-MLX-4bit][conversation model] is used, its detailed
-settings can be found in [here](omlx/model_settings.json).
+For the conversation agent [nace-ai/Qwen3.5-9B-MLX-4bit][conversation model] is used via [kapitsa]
 
-For speech-to-text [mlx-community/parakeet-tdt-0.6b-v3][stt model] is used.
+For speech-to-text [mlx-community/parakeet-tdt-0.6b-v3][stt model] is used via [oMLX].
 
 # Layout
-
-## [module.nix](./module.nix)
-
-Contains a [nix-darwin] module that:
-- defines the user that runs all the services
-- defines & provisions macOS launchd services
-    - [colima]
-    - [oMLX]
-- provisions the docker compose setup
-- defines & downloads the necessary models
 
 ## [docker](./docker/)
 
@@ -34,13 +23,22 @@ Contains a Docker Compose stack with the following services:
 - [wyoming-whisper]: an adapter making OpenAI-compatible endpoints compatible with the [Wyoming Protocol]
 - [ha-llm-tool-call-sanitizer]: a tiny proxy between HA and oMLX to account for HA's inability to handle tool calls with comma separated strings as floor/area/device names
 
-## [omlx](./omlx/)
+## [module.nix](./module.nix)
 
-Contains [oMLX] settings.
+Contains a [nix-darwin] module that:
+- defines the user that runs all the services
+- defines & provisions macOS launchd services
+    - [colima]
+    - [kapitsa]
+    - [oMLX]
+- provisions the docker compose setup
+- defines & downloads the necessary models
+
+## [packages](./packages/)
+
+Contains the nix pacakge files for [kapitsa] & [oMLX].
 
 # Running
-
-Please install [oMLX] in `/Applications` manually before proceeding. Eventually its installation will be a part of [module.nix](./module.nix).
 
 This repo assumes that [nix-darwin] is used via flakes. The setup can be added to your flake like this:
 
@@ -59,13 +57,13 @@ This repo assumes that [nix-darwin] is used via flakes. The setup can be added t
     ...
   in
   {
-    darwinConfigurations."foobar" = nix-darwin.lib.darwinSystem {
+    darwinConfigurations."your-host-name" = nix-darwin.lib.darwinSystem {
       modules = [
         configuration
         (import "${my-ha-voice-assistant}/module.nix" {
           user = "_voice_assistant";
           home = "/var/lib/_voice_assistant";
-          apiKeyFile = "/path/to/.omlx-api-key";
+          apiKeyFile = "/path/to/.kapitsa-and-omlx-api-key";
         })
       ]
     };
@@ -74,11 +72,12 @@ This repo assumes that [nix-darwin] is used via flakes. The setup can be added t
 ```
 
 [colima]: https://colima.run
-[conversation model]: https://huggingface.co/mlx-community/Qwen3.5-4B-MLX-4bit
+[conversation model]: https://huggingface.co/nace-ai/Qwen3.5-9B-MLX-4bit
 [HA llama.cpp]: https://www.home-assistant.io/integrations/llama_cpp
 [HA LLM intents]: https://github.com/skye-harris/llm_intents
 [ha-llm-tool-call-sanitizer]: https://github.com/nikolaykasyanov/ha-llm-tool-call-sanitizer
 [Home Assistant]: https://www.home-assistant.io
+[kapitsa]: https://github.com/nace-ai/kapitsa
 [nix-darwin]: https://github.com/nix-darwin/nix-darwin
 [oMLX]: https://omlx.ai
 [stt model]: https://huggingface.co/mlx-community/parakeet-tdt-0.6b-v3/tree/main
